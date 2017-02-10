@@ -40,7 +40,7 @@ class GroupList extends React.Component { // eslint-disable-line react/prefer-st
       ];
     return (
       <Wrapper>
-        { items.map(item=><Item {...item} />) }        
+        { items.map((item,index)=><Item {...item} key={index}/>) }        
       </Wrapper>
     );
   }

@@ -1,0 +1,38 @@
+div :first{
+    
+    border-radius: .04rem;
+    width:2.16rem;
+    height: 2.16rem;
+    background-image: url('ww');
+    background-repeat: no-repeat;
+    background-size:cover;
+    position: relative;
+
+     height: '.96rem',
+                   position:'relative',
+              overflow:'hidden',
+              marginBottom:'.1rem',
+              wordBreak:'breakAll',
+
+
+}
+
+div{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: .7;
+    height: .2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 .02rem;
+
+    height: .96rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: .1rem;
+    -webkit-line-clamp:2;
+	-webkit-box-orient:vertical;
+}
