@@ -48,8 +48,11 @@ const PicCount = styled.div`
 
 class ImageList extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
     render() {
-        const picCount = this.props.images.length;
-        const images = this.props.images.slice(0, 3);
+         if (!this.props) {
+            return (<div style={{ display: 'none' }}></div>);
+        }
+        const picCount = this.props.images?this.props.images.length:0;
+        const images = this.props.images?this.props.images.slice(0, 3):[];
         if (images.length !== 3) {
             return (<div style={{ display: 'none' }}></div>);
         }

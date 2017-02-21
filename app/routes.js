@@ -68,6 +68,14 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/swiper',
+      name: 'swiperTest',
+      getComponent(location, cb) {
+        import('containers/SwiperTest')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

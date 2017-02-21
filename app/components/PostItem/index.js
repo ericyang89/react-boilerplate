@@ -16,6 +16,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom:.16rem;
+  padding-bottom:.16rem;
+  border-bottom:.06rem solid #ccc;
 `;
 
 const ContentWrapper = styled.div`
@@ -34,6 +36,7 @@ const LeftBox = styled.div`
 `;
 
 const Vote = styled.img` 
+  display:${(props)=>props.show?'inline':'none'}
   height:.34rem;
   width:.6rem;
   border-radius: .04rem;
@@ -55,21 +58,7 @@ const Title=styled.div`
 
 class PostItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    let item = {
-      avator: 'https://apic.douyucdn.cn/upload/avanew/face/201609/28/01/f753a7aaa6e6b5f6df3f66e3b6a74cd3_big.jpg?rltime=1486626791',
-      poster: '1麻烦搜的咖啡机',
-      postTime: '01天前',
-      postTitle: '一二三四五六七八九零一二三四五六二三四五六七四五六七八九零一二三四五1111六',
-      isContainedVideo: false,
-      images: [
-        'https://img.douyucdn.cn/data/yuba/default/2017/02/10/201702100910155657.200x0.jpg?i=417333f4c1676249026c11d5d3e6610834',
-        'https://img.douyucdn.cn/data/yuba/default/2017/02/10/201702100910155657.200x0.jpg?i=417333f4c1676249026c11d5d3e6610834',
-
-      ],
-      postTeam: 'Dota2',
-      isVote: true,
-      replyCount: '555',
-    };
+    let item = this.props.item;
     const isOnePic = item.images && (item.images.length === 1 || item.images.length === 2)
     return (
       <Wrapper>
@@ -77,7 +66,7 @@ class PostItem extends React.PureComponent { // eslint-disable-line react/prefer
         <ContentWrapper>
           <LeftBox isOnePic={isOnePic}>            
             <Title title={item.postTitle}>
-              <Vote src={voteImg} />
+              <Vote src={voteImg} show={item.isVote}/>
               {item.postTitle}
             </Title>
             <ImageList images={item.images} />
@@ -91,15 +80,15 @@ class PostItem extends React.PureComponent { // eslint-disable-line react/prefer
 }
 
 PostItem.propTypes = {
-  // avator: React.PropTypes.string,
-  // poster: React.PropTypes.string,
-  // postTime: React.PropTypes.string,
-  // postTitle: React.PropTypes.string,
-  // isContainVideo: React.PropTypes.bool,
-  // images: React.PropTypes.array,
-  // postTeam: React.PropTypes.string,
-  // isVote: React.PropTypes.bool,
-  // replyCount: React.PropTypes.number,
+  avator: React.PropTypes.string,
+  poster: React.PropTypes.string,
+  postTime: React.PropTypes.string,
+  postTitle: React.PropTypes.string,
+  isContainVideo: React.PropTypes.bool,
+  images: React.PropTypes.array,
+  postTeam: React.PropTypes.string,
+  isVote: React.PropTypes.bool,
+  replyCount: React.PropTypes.number,
 };
 
 export default PostItem;
