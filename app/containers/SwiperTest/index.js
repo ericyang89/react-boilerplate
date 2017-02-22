@@ -8,9 +8,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 // import Tabs from 'material-ui/Tabs/Tabs';
 // import Tab from 'material-ui/Tabs/Tab';
-import { Tabs, Tab } from 'components/Tabs';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import GroupList from 'components/GroupList';
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SwipeableViews from 'react-swipeable-views';
 
 const styles = {
@@ -29,7 +29,7 @@ const styles = {
   slide: {
     padding: 15,
     minHeight: 100,
-    color: '#fff',
+    color: '#f70',
   },
   slide1: {
     backgroundColor: '#FEA900',
@@ -45,71 +45,57 @@ const styles = {
 class DemoTabs extends React.Component {
   state = {
     index: 0,
+    activeItem:12
   };
 
-  handleChangeTabs = (value) => () => {
-    console.log(value)
-    this.setState({
-      index: value,
-    });
-  };
+   groups=[
+      {"valuse":"dota2","topicId":12},
+      {"valuse":"lol","topicId":13},
+      {"valuse":"dota3","topicId":14},
+      {"valuse":"dota4","topicId":15},
+      {"valuse":"dota5","topicId":16},
+      {"valuse":"dota3","topicId":17},
+      {"valuse":"dota4","topicId":18},
+      {"valuse":"dota5","topicId":19},
+      {"valuse":"dota3","topicId":20},
+      {"valuse":"dota4","topicId":21},
+      {"valuse":"dota5","topicId":22},
+  ];
+
 
   handleChangeIndex = (index) => {
+    let activeItem=this.groups[index].topicId;
     this.setState({
       index,
+      activeItem,
     });
   };
+
+  clickHandle=(tId,item,e)=>{
+      this.setState({
+      activeItem:tId,
+      index:item.props.index,
+    });
+    };
 
   render() {
     const {
       index,
     } = this.state;
-
+    
+  let groupList=this.groups.map((item)=> Object.assign(item,{isActive:this.state.activeItem===item.topicId}));
+  const swiperItems=()=>{
+    let ret=[];
+    groupList.map((item,index)=>ret.push(<div style={styles.slide} key={index}>{item.valuse}</div>));
+    return ret;
+  }
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div style={{ fontSize: '.2rem' }}>
-
-          <SwipeableViews index={index} style={styles.root} slideStyle={styles.slideContainer}>
-            <div style={Object.assign({}, styles.slide, styles.slide1)}>
-              slide n°1
-            </div>
-            <div style={Object.assign({}, styles.slide, styles.slide2)}>
-              slide n°2
-            </div>
-            <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°3
-            </div>
-              <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°4
-            </div>
-                  <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°5
-            </div>
-                  <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°6
-            </div>
-                  <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°7
-            </div>
-                  <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°8
-            </div>
-          </SwipeableViews>
-          <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
-            <div style={Object.assign({}, styles.slide, styles.slide1)}>
-              slide n°1
-            </div>
-            <div style={Object.assign({}, styles.slide, styles.slide2)}>
-              slide n°22323
-              <br />
-              <br />
-            </div>
-            <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°3
-            </div>
+          <GroupList items={groupList} handleClick={this.clickHandle} />
+          <SwipeableViews index={index} style={styles.root} slideStyle={styles.slideContainer}  onChangeIndex={this.handleChangeIndex}>
+            {swiperItems()}   
           </SwipeableViews>
         </div>
-      </MuiThemeProvider>
     );
   }
 }

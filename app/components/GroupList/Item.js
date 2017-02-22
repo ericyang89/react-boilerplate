@@ -17,8 +17,9 @@ class Item extends React.Component { // eslint-disable-line react/prefer-statele
   render() {   
     const valuse=this.props.valuse;
     const isActive=this.props.isActive;
+    const topicId=this.props.topicId;
     return (
-      <ItemWrapper isActive={isActive}>
+      <ItemWrapper isActive={isActive} onClick={(e)=>this.props.onClick(this.props.topicId,this,e)}>
         {valuse}
       </ItemWrapper>
     );
@@ -29,6 +30,7 @@ Item.propTypes = {
   value: React.PropTypes.string,
   isActive:React.PropTypes.bool,
   topicId:React.PropTypes.number,
+  onClick:React.PropTypes.func,
 };
 
 export default Item;

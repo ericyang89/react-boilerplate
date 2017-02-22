@@ -63,6 +63,14 @@
       "replyCount": 555
     }
   ],
+  "groups":[
+      {"valuse":"dota2","topicId":12},
+      {"valuse":"lol","topicId":13},
+      {"valuse":"dota3","topicId":14},
+      {"valuse":"dota4","topicId":15},
+      {"valuse":"dota5","topicId":16},
+      {"valuse":"lol3","topicId":17}
+  ],
   "comments": [{
     "id": 1,
     "body": "some comment",

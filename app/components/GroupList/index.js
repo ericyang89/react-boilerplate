@@ -23,11 +23,13 @@ const Wrapper=styled.div`
 class GroupList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     let items=this.props.items;
-    items=[
+    let handleClick=this.props.handleClick;
+    handleClick=handleClick?handleClick:(tId,item,e)=>(console.log(tId,item,e));
+    items=items?items:[
       {valuse:"dota2",isActive:true,topicId:12},
       {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
+      {valuse:"asdaf",isActive:false,topicId:15},
+      {valuse:"asdaf",isActive:false,topicId:16},
       {valuse:"asdaf",isActive:false,topicId:13},
       {valuse:"asd44444af",isActive:true,topicId:13},
       {valuse:"asdaf",isActive:false,topicId:13},
@@ -40,13 +42,14 @@ class GroupList extends React.Component { // eslint-disable-line react/prefer-st
       ];
     return (
       <Wrapper>
-        { items.map((item,index)=><Item {...item} key={index}/>) }        
+        { items.map((item,index)=><Item {...item} key={index} index={index} onClick={handleClick}/>) }        
       </Wrapper>
     );
   }
 }
 GroupList.propTypes = {
   items: React.PropTypes.array,
+  handleClick: React.PropTypes.func,
 };
 
 export default GroupList;
