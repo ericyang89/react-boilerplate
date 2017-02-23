@@ -17,7 +17,7 @@ const styles = {
   topSlide: {
     color: 'red',
   },
-    root: {
+  root: {
     // width:'1rem',
     // padding: '0 3.1rem',
     // position:'relative',
@@ -45,57 +45,69 @@ const styles = {
 class DemoTabs extends React.Component {
   state = {
     index: 0,
-    activeItem:12
+    activeItem: 12,
+    translateLeft:0,
   };
 
-   groups=[
-      {"valuse":"dota2","topicId":12},
-      {"valuse":"lol","topicId":13},
-      {"valuse":"dota3","topicId":14},
-      {"valuse":"dota4","topicId":15},
-      {"valuse":"dota5","topicId":16},
-      {"valuse":"dota3","topicId":17},
-      {"valuse":"dota4","topicId":18},
-      {"valuse":"dota5","topicId":19},
-      {"valuse":"dota3","topicId":20},
-      {"valuse":"dota4","topicId":21},
-      {"valuse":"dota5","topicId":22},
+  groups = [
+    { "valuse": "dota2", "topicId": 12 },
+    { "valuse": "lol", "topicId": 13 },
+    { "valuse": "dota3", "topicId": 14 },
+    { "valuse": "dota4", "topicId": 15 },
+    { "valuse": "dota5", "topicId": 16 },
+    { "valuse": "dota3", "topicId": 17 },
+    { "valuse": "dota4", "topicId": 18 },
+    { "valuse": "dota5", "topicId": 19 },
+    { "valuse": "dota3", "topicId": 20 },
+    { "valuse": "dota4", "topicId": 21 },
+    { "valuse": "dota5", "topicId": 22 },
   ];
 
 
   handleChangeIndex = (index) => {
-    let activeItem=this.groups[index].topicId;
+    let activeItem = this.groups[index].topicId;
+    let element=document.querySelector("#reactScrollTabContent");
+    let translateLeft=this.calcTranslateLeft(element.children[index]);    
     this.setState({
       index,
       activeItem,
+      translateLeft,
     });
   };
 
-  clickHandle=(tId,item,e)=>{
-      this.setState({
-      activeItem:tId,
-      index:item.props.index,
+  calcTranslateLeft = ele => {
+    let ta = ele;
+    let clientWidth = document.querySelector("#reactScrollTabContent").parentNode.offsetWidth;   
+    let translateLeft = (clientWidth - ta.offsetWidth) / 2 - ta.offsetLeft;
+    return translateLeft;
+  }
+  clickHandle = (tId, item, e) => {   
+    let ta=e.target;   
+     this.setState({
+      activeItem: tId,
+      index: item.props.index,
+      translateLeft:this.calcTranslateLeft(ta),
     });
-    };
+  };
 
   render() {
     const {
       index,
     } = this.state;
-    
-  let groupList=this.groups.map((item)=> Object.assign(item,{isActive:this.state.activeItem===item.topicId}));
-  const swiperItems=()=>{
-    let ret=[];
-    groupList.map((item,index)=>ret.push(<div style={styles.slide} key={index}>{item.valuse}</div>));
-    return ret;
-  }
+
+    let groupList = this.groups.map((item) => Object.assign(item, { isActive: this.state.activeItem === item.topicId }));
+    const swiperItems = () => {
+      let ret = [];
+      groupList.map((item, index) => ret.push(<div style={styles.slide} key={index}>{item.valuse}</div>));
+      return ret;
+    }
     return (
-        <div style={{ fontSize: '.2rem' }}>
-          <GroupList items={groupList} handleClick={this.clickHandle} />
-          <SwipeableViews index={index} style={styles.root} slideStyle={styles.slideContainer}  onChangeIndex={this.handleChangeIndex}>
-            {swiperItems()}   
-          </SwipeableViews>
-        </div>
+      <div style={{ fontSize: '.2rem' }}>
+        <GroupList items={groupList} handleClick={this.clickHandle} translateLeft={this.state.translateLeft} />
+        <SwipeableViews index={index} style={styles.root} slideStyle={styles.slideContainer} onChangeIndex={this.handleChangeIndex}>
+          {swiperItems()}
+        </SwipeableViews>
+      </div>
     );
   }
 }
