@@ -22,7 +22,6 @@ const Content=styled.div`
   align-items: center;
   transform: ${(props)=>{return "translate("+props.translateLeft+"px,0px)"}};
   transition: transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s; 
-
 `;
 
 
@@ -31,30 +30,22 @@ class GroupList extends React.Component { // eslint-disable-line react/prefer-st
   state = {
     moveX: 0,
   };
+  startX=0;
+  maxGroupWidth=-10000;
   handleTouchStart = (e) => {
       this.startX=e.nativeEvent.touches[0].clientX;
   };
-  handleTouchEnd = (e) => {
-    this.props.translateLeft
-  };
-  startX=0;
-  maxGroupWidth=-10000;
   handleTouchMove = (e) => {
     let diat = e.nativeEvent.touches[0].clientX - this.startX;
-    if (6 > 5) {
-      this.setState({
-        moveX: e.nativeEvent.touches[0].clientX - this.startX
-      })
-    }
-
-
+    this.setState({
+      moveX: e.nativeEvent.touches[0].clientX - this.startX
+    });
   };
   componentWillReceiveProps(){
      this.setState({
         moveX: 0
       })
-  }
-  
+  }  
   componentDidMount(){
     const contentDom=document.querySelector("#reactScrollTabContent")
     let clientWidth = contentDom.parentNode.offsetWidth;
@@ -63,25 +54,13 @@ class GroupList extends React.Component { // eslint-disable-line react/prefer-st
   render() {
     let items=this.props.items;
     let handleClick=this.props.handleClick;
-    handleClick=handleClick?handleClick:(tId,item,e)=>(console.log(tId,item,e));
-    items=items?items:[
-      {valuse:"dota2",isActive:true,topicId:12},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:15},
-      {valuse:"asdaf",isActive:false,topicId:16},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asd44444af",isActive:true,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      {valuse:"asdaf",isActive:false,topicId:13},
-      ];
-      let transLeft=this.props.translateLeft+this.state.moveX;
-       const minTranslateLeft = this.maxGroupWidth;
-          transLeft=transLeft>0?0:(transLeft < minTranslateLeft ? minTranslateLeft : transLeft);
+    handleClick = handleClick;
+    items = items;
+    let transLeft = this.props.translateLeft + this.state.moveX;
+    const minTranslateLeft = this.maxGroupWidth;
+
+    //边界控制
+    transLeft = transLeft > 0?0:(transLeft < minTranslateLeft ? minTranslateLeft : transLeft);
     return (
       <Wrapper >
         <Content translateLeft={transLeft} 
