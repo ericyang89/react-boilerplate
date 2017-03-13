@@ -64,12 +64,12 @@
     }
   ],
   "groups":[
-      {"valuse":"dota2","topicId":12},
-      {"valuse":"lol","topicId":13},
-      {"valuse":"dota3","topicId":14},
-      {"valuse":"dota4","topicId":15},
-      {"valuse":"dota5","topicId":16},
-      {"valuse":"lol3","topicId":17}
+      {"title":"dota2","topicId":12},
+      {"title":"lol","topicId":13},
+      {"title":"dota3","topicId":14},
+      {"title":"dota4","topicId":15},
+      {"title":"dota5","topicId":16},
+      {"title":"lol3","topicId":17}
   ],
   "comments": [{
     "id": 1,

@@ -54,7 +54,6 @@ class GroupList extends React.Component { // eslint-disable-line react/prefer-st
   render() {
     let items=this.props.items;
     let handleClick=this.props.handleClick;
-    handleClick = handleClick;
     items = items;
     let transLeft = this.props.translateLeft + this.state.moveX;
     const minTranslateLeft = this.maxGroupWidth;

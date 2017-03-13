@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import {makeSelectPosts} from './selectors';
 import GroupList from 'components/GroupList';
 import PostItem from 'components/PostItem';
+import TabView from 'components/TabView';
 import {loadPosts} from './actions.js';
 
 function getPosts(posts){
@@ -29,10 +30,32 @@ export class YubaHomepage extends React.Component { // eslint-disable-line react
     this.props.onLoadPosts();
   }
   render() {
+     let  groups = [
+        { "value": "dota2", "topicId": 12,"views":[]  },
+        { "value": "lol", "topicId": 13 ,"views":[] },
+        { "value": "dota3", "topicId": 14 ,"views":[] },
+        { "value": "dota4", "topicId": 15 ,"views":[] },
+        { "value": "dota5", "topicId": 16 ,"views":[] },
+        { "value": "dota3", "topicId": 17 ,"views":[] },
+        { "value": "dota4", "topicId": 18 ,"views":[] },
+        { "value": "dota5", "topicId": 19 ,"views":[] },
+        { "value": "dota3", "topicId": 20 ,"views":[] },
+        { "value": "dota4", "topicId": 21 ,"views":[] },
+        { "value": "dota5", "topicId": 22 ,"views":[] },
+    ];
+    let changeHandle=(index,item)=>{
+      console.log('this is changeHandle')
+    };
+
+
+    // todo:测试
+    groups[0].views=getPosts(this.props.posts);
+    groups[1].views=getPosts(this.props.posts);
+    
+     console.log('group',groups)
     return (
       <div>
-      <GroupList/>
-      {getPosts(this.props.posts)}
+        <TabView groups={groups} onChange={changeHandle}/>     
       </div>
     );
   }

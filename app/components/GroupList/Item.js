@@ -15,12 +15,12 @@ const ItemWrapper=styled.div`
 
 class Item extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {   
-    const valuse=this.props.valuse;
+    const value=this.props.value;
     const isActive=this.props.isActive;
     const topicId=this.props.topicId;
     return (
       <ItemWrapper isActive={isActive} onClick={(e)=>this.props.onClick(this.props.topicId,this,e)}>
-        {valuse}
+        {value}
       </ItemWrapper>
     );
   }
