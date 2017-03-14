@@ -20,6 +20,9 @@ import {
   LOAD_POSTS,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_ERROR,
+  LOAD_TOPICS,
+  LOAD_TOPICS_SUCCESS,
+  LOAD_TOPICS_ERROR,
 } from './constants';
 
 export function loadPosts() {
@@ -43,4 +46,27 @@ export function postsLoadError(error) {
     error,
   };
 }
+
+export function loadTopics() {
+  return {
+    type: LOAD_TOPICS,
+  };
+}
+
+
+export function topicsLoaded(topics) {
+  return {
+    type: LOAD_TOPICS_SUCCESS,
+    topics,
+  };
+}
+
+
+export function topicsLoadError(error) {
+  return {
+    type: LOAD_TOPICS_ERROR,
+    error,
+  };
+}
+
 

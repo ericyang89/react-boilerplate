@@ -32,6 +32,10 @@ const makeSelectPosts = () => createSelector(
   (subState) => subState.get('posts')
 );
 
+const makeSelectTopics = () => createSelector(
+  selectYubaHomepageDomain(),
+  (subState) => subState.get('topics')
+);
 
 export default selectYubaHomepageDomain;
 export {
@@ -39,6 +43,7 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectPosts,
+  makeSelectTopics,
 };
 
 

@@ -63,13 +63,17 @@
       "replyCount": 555
     }
   ],
-  "groups":[
-      {"title":"dota2","topicId":12},
-      {"title":"lol","topicId":13},
-      {"title":"dota3","topicId":14},
-      {"title":"dota4","topicId":15},
-      {"title":"dota5","topicId":16},
-      {"title":"lol3","topicId":17}
+  "topics":[
+      {"value":"dota2","topicId":12},
+      {"value":"lol","topicId":13},
+      {"value":"dota3","topicId":14},
+      {"value":"dota4","topicId":15},
+      {"value":"dota5","topicId":16},
+      {"value":"lol3","topicId":17},
+      {"value":"lol3","topicId":18},
+      {"value":"lol3","topicId":19},
+      {"value":"lol3","topicId":20},
+      {"value":"lol3","topicId":21}
   ],
   "comments": [{
     "id": 1,

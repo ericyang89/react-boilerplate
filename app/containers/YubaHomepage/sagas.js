@@ -23,12 +23,23 @@ import {
   LOAD_POSTS,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_ERROR,
+
+  LOAD_TOPICS,
+  LOAD_TOPICS_SUCCESS,
+  LOAD_TOPICS_ERROR,
+
 } from './constants';
-import { loadPosts, postsLoaded,postsLoadError } from './actions';
+import { 
+  loadPosts, 
+  postsLoaded,
+  postsLoadError , 
+  loadTopics, 
+  topicsLoaded,
+  topicsLoadError ,
+} from './actions';
 
 
 import request from 'utils/request';
-import { makeSelectUsername } from './selectors';
 
 /**
  * Github repos request/response handler
@@ -60,7 +71,41 @@ export function* getPostsData() {
   yield cancel(watcher);
 }
 
+/**
+ * Github repos request/response handler
+ */
+export function* getTopics() {
+  // Select username from store
+  const requestURL = `http://localhost:3001/topics`;
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const data = yield call(request, requestURL);
+    yield put(topicsLoaded(data));
+  } catch (err) {
+    yield put(topicsLoadError(err));
+  }
+}
+
+/**
+ * Root saga manages watcher lifecycle
+ */
+export function* getTopicsData() {
+  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
+  // By using `takeLatest` only the result of the latest API call is applied.
+  // It returns task descriptor (just like fork) so we can continue execution
+  const watcher = yield takeLatest(LOAD_TOPICS, getTopics);
+
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
+
+
+
 // Bootstrap sagas
 export default [
   getPostsData,
+  getTopicsData,
 ];

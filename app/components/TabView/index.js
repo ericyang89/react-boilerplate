@@ -8,14 +8,16 @@ import React, { PropTypes } from 'react';
 import GroupList from 'components/GroupList';
 import SwipeableViews from 'react-swipeable-views';
 
+const headerHeightRem=1.9;
+const headerLineHeight=1;
+let headerHeight=document.body.clientHeight-parseInt(document.documentElement.style.fontSize)*headerHeightRem;
 const styles = {
     slideContainer: {
         padding: '0 0',
     },
     slide: {
-        padding: 15,
-        minHeight: 100,
         color: '#f70',
+        height:headerHeight-headerLineHeight+"px",
     },
 
 };
@@ -23,18 +25,22 @@ const styles = {
 export default class TabView extends React.Component {
 
     static propTypes = {
-        /**
-         * Override the inline-styles of the button element.
-         */
         groups: PropTypes.array,
         onChange:PropTypes.func,
     }
     state = {
         index: 0,
-        activeItem: 12,
+        activeItem: 0,
         translateLeft: 0,
     };
 
+    componentWillReceiveProps=(nextProps)=> {
+        if (nextProps.groups.length>0) {
+
+            // 修改state，不需要render；所以没有用setState
+            this.state.activeItem=nextProps.groups[0].topicId;
+        }
+    }
 
     // view 改变 tab
     handleChangeIndex = (index) => {
@@ -68,15 +74,20 @@ export default class TabView extends React.Component {
             index,
         } = this.state;
 
+        if(this.props.groups.length===0){
+            return (<div></div>);
+        }
+
         let groupList = this.props.groups.map((item) => Object.assign(item, { isActive: this.state.activeItem === item.topicId }));
         const swiperItems = () => {
             let ret = [];
             groupList.map((item, index) => ret.push(<div style={styles.slide} key={index}>{item.views}</div>));
-            return ret;
+            return ret; 
         }
         return (
             <div style={{ fontSize: '.2rem' }}>
                 <GroupList items={groupList} handleClick={this.clickHandle} translateLeft={this.state.translateLeft} />
+                <div style={{height:"1px",backgroundColor:"#ccc"}}></div>
                 <SwipeableViews index={index} slideStyle={styles.slideContainer} onChangeIndex={this.handleChangeIndex}>
                     {swiperItems()}
                 </SwipeableViews>
