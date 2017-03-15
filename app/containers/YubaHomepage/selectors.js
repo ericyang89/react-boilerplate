@@ -37,6 +37,11 @@ const makeSelectTopics = () => createSelector(
   (subState) => subState.get('topics')
 );
 
+const makeSelectAddPostParam = () => createSelector(
+  selectYubaHomepageDomain(),
+  (subState) => subState.get('addPostParam')
+);
+
 export default selectYubaHomepageDomain;
 export {
   selectYubaHomepageDomain,
@@ -44,6 +49,7 @@ export {
   makeSelectError,
   makeSelectPosts,
   makeSelectTopics,
+  makeSelectAddPostParam,
 };
 
 

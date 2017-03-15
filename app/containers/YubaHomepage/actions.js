@@ -23,6 +23,9 @@ import {
   LOAD_TOPICS,
   LOAD_TOPICS_SUCCESS,
   LOAD_TOPICS_ERROR,
+  ADD_POSTS,
+  ADD_POSTS_SUCCESS,
+  ADD_POSTS_ERROR,
 } from './constants';
 
 export function loadPosts() {
@@ -65,6 +68,31 @@ export function topicsLoaded(topics) {
 export function topicsLoadError(error) {
   return {
     type: LOAD_TOPICS_ERROR,
+    error,
+  };
+}
+
+/**
+ * 添加帖子
+ * @param {topicId,lastQId} param 
+ */
+export function addPosts(param) {
+  return {
+    type: ADD_POSTS,
+    param,
+  };
+}
+
+export function addPostsSuccess(data) {
+  return {
+    type: ADD_POSTS_SUCCESS,
+    ...data
+  };
+}
+
+export function addPostsError(error) {
+  return {
+    type: ADD_POSTS_ERROR,
     error,
   };
 }

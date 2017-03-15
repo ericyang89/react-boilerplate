@@ -11,7 +11,8 @@ import {makeSelectPosts,makeSelectTopics} from './selectors';
 import GroupList from 'components/GroupList';
 import PostItem from 'components/PostItem';
 import TabView from 'components/TabView';
-import {loadPosts,loadTopics} from './actions.js';
+import {loadPosts,loadTopics,addPosts} from './actions.js';
+import { List } from 'immutable';
 
 function getPosts(posts){
   let ret=[];
@@ -20,35 +21,29 @@ function getPosts(posts){
       ret.push(<PostItem key={i} item={posts[i]}/>)
     }
   }
-  console.log("posts",posts);
-  console.log("ret",ret);
   return ret;
 }
 
 export class YubaHomepage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentWillMount(){
-    this.props.onLoadPosts();
     this.props.onLoadTopics();
   }
   render() {
-     let  groups = this.props.topics?this.props.topics:[];
-     groups=JSON.parse(JSON.stringify(groups));
+    console.log('ttt',this.props.topics)
+     let  groups = (this.props.topics&&this.props.topics.size>0)?this.props.topics:List();
 
-    //  [
-    //     { "value": "dota2", "topicId": 12,"views":[]  },
-    //     { "value": "lol", "topicId": 13 ,"views":[] },
-    //     { "value": "dota3", "topicId": 14 ,"views":[] },
-    //     { "value": "dota4", "topicId": 15 ,"views":[] },
-    //     { "value": "dota5", "topicId": 16 ,"views":[] },
-    //     { "value": "dota3", "topicId": 17 ,"views":[] },
-    //     { "value": "dota4", "topicId": 18 ,"views":[] },
-    //     { "value": "dota5", "topicId": 19 ,"views":[] },
-    //     { "value": "dota3", "topicId": 20 ,"views":[] },
-    //     { "value": "dota4", "topicId": 21 ,"views":[] },
-    //     { "value": "dota5", "topicId": 22 ,"views":[] },
-    // ];
-    let changeHandle=(index,item)=>{
+     groups=groups.map(item=>item.set("views",getPosts(item.get("posts").toJS()) ));
+     groups=groups.toJS();
+
+
+    let changeHandle=(index)=>{
       console.log('this is changeHandle')
+      const param={
+        topicId:groups[index].topicId,
+        lastQId:"",
+      }
+
+      this.props.onAddPosts(param);
     };
 
 
@@ -73,7 +68,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onLoadPosts:()=>dispatch(loadPosts()),
     onLoadTopics:()=>dispatch(loadTopics()),
-    // onAddPosts:(param)=>dispatch(addPosts(param))
+    onAddPosts:(param)=>dispatch(addPosts(param))
   };
 }
 const mapStateToProps = createStructuredSelector({

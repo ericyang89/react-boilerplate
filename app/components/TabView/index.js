@@ -34,6 +34,9 @@ export default class TabView extends React.Component {
         translateLeft: 0,
     };
 
+    // componentDidMount=()=>{
+    //     this.props.onChange(0);
+    // }
     componentWillReceiveProps=(nextProps)=> {
         if (nextProps.groups.length>0) {
 
@@ -52,6 +55,9 @@ export default class TabView extends React.Component {
             activeItem,
             translateLeft,
         });
+
+        // 触发 hooks
+        this.props.onChange(index);
     };
 
     calcTranslateLeft = ele => {
@@ -67,6 +73,9 @@ export default class TabView extends React.Component {
             index: item.props.index,
             translateLeft: this.calcTranslateLeft(ta),
         });
+
+            // 触发 hooks
+        this.props.onChange(item.props.index);
     };
 
     render() {
@@ -78,7 +87,7 @@ export default class TabView extends React.Component {
             return (<div></div>);
         }
 
-        let groupList = this.props.groups.map((item) => Object.assign(item, { isActive: this.state.activeItem === item.topicId }));
+        let groupList = this.props.groups.map((item) => Object.assign({ isActive: this.state.activeItem === item.topicId }, item));
         const swiperItems = () => {
             let ret = [];
             groupList.map((item, index) => ret.push(<div style={styles.slide} key={index}>{item.views}</div>));

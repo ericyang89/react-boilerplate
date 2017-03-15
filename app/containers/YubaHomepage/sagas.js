@@ -18,7 +18,7 @@
 
 import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
-// import { LOAD_REPOS } from 'containers/App/constants';
+import {makeSelectAddPostParam} from "./selectors"
 import {
   LOAD_POSTS,
   LOAD_POSTS_SUCCESS,
@@ -28,6 +28,10 @@ import {
   LOAD_TOPICS_SUCCESS,
   LOAD_TOPICS_ERROR,
 
+  ADD_POSTS,
+  ADD_POSTS_SUCCESS,
+  ADD_POSTS_ERROR,
+
 } from './constants';
 import { 
   loadPosts, 
@@ -36,6 +40,9 @@ import {
   loadTopics, 
   topicsLoaded,
   topicsLoadError ,
+  addPostsSuccess,
+  addPostsError,
+  addPosts,
 } from './actions';
 
 
@@ -81,6 +88,7 @@ export function* getTopics() {
   try {
     // Call our request helper (see 'utils/request')
     const data = yield call(request, requestURL);
+    yield put(addPosts({topicId:data[0].topicId,lastQid:null}));
     yield put(topicsLoaded(data));
   } catch (err) {
     yield put(topicsLoadError(err));
@@ -101,6 +109,40 @@ export function* getTopicsData() {
   yield cancel(watcher);
 }
 
+export function* addPostSaga() {
+
+  //TODO  需要把参数拼到 url
+  const param = yield select(makeSelectAddPostParam());
+  const requestURL = `http://localhost:3001/posts`;
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const data = yield call(request, requestURL);
+    yield put(addPostsSuccess({
+      posts:data,
+      topicId:param.topicId,
+    }));
+  } catch (err) {
+    yield put(addPostsError(err));
+  }
+}
+
+/**
+ * Root saga manages watcher lifecycle
+ */
+export function* addPostsData() {
+  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
+  // By using `takeLatest` only the result of the latest API call is applied.
+  // It returns task descriptor (just like fork) so we can continue execution
+
+  const watcher = yield takeLatest(ADD_POSTS, addPostSaga);
+
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
+
 
 
 
@@ -108,4 +150,5 @@ export function* getTopicsData() {
 export default [
   getPostsData,
   getTopicsData,
+  addPostsData,
 ];
