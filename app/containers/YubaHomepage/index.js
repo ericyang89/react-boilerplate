@@ -16,53 +16,64 @@ import { List } from 'immutable';
 
 function getPosts(posts){
   let ret=[];
-  if(posts&&posts.length>0){
+  if(Array.isArray(posts)&&posts.length>0){
     for(let i=0;i<posts.length;i++){
       ret.push(<PostItem key={i} item={posts[i]}/>)
     }
+  }else if(posts.length===0){
+    ret=(<div>loading posts</div>)
   }
   return ret;
 }
 
+const getGroups=(topics)=>{
+  let  ret = (topics&&topics.size>0)?topics:List();
+  ret=ret.map(item=>item.set("views",getPosts(item.get("posts").toJS()) ));
+  return ret.toJS();
+}
+
 export class YubaHomepage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  componentWillMount(){
+  componentWillMount() {
     this.props.onLoadTopics();
   }
-  render() {
-    console.log('ttt',this.props.topics)
-     let  groups = (this.props.topics&&this.props.topics.size>0)?this.props.topics:List();
+  changeHandle = (index) => {
+    console.log('this is changeHandle')
+    let groups=getGroups(this.props.topics);
+    const param = {
+      topicId: groups[index].topicId,
+      lastQId: "",
+    }
 
-     groups=groups.map(item=>item.set("views",getPosts(item.get("posts").toJS()) ));
-     groups=groups.toJS();
-
-
-    let changeHandle=(index)=>{
-      console.log('this is changeHandle')
-      const param={
-        topicId:groups[index].topicId,
-        lastQId:"",
-      }
-
+    if (groups[index].posts.length === 0) {
       this.props.onAddPosts(param);
-    };
+    }
+
+  };
 
 
-    // todo:测试
-    // groups[0].views=getPosts(this.props.posts);
-    // groups[1].views=getPosts(this.props.posts);
+  viewScrollHandle=(index,deltaHeight)=>{
+    const threshold=20;
+    let groups=getGroups(this.props.topics);
+    if(deltaHeight<threshold){
+      console.log('loadinnnnnnn data');
+    }
+  }
+  render() {
+    if(!this.props.topics||this.props.topics.size===0){
+      // TabView 的groups 不支持空数组
+      return (<div>loading</div>);
+    }
+     
+    let groups=getGroups(this.props.topics);
 
-     console.log('group',groups)
     return (
       <div>
-        <TabView groups={groups} onChange={changeHandle}/>     
+        <TabView groups={groups} onChange={this.changeHandle} onViewScroll={this.viewScrollHandle}/>     
       </div>
     );
   }
 }
 
-// YubaHomepage.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-// };
 
 function mapDispatchToProps(dispatch) {
   return {

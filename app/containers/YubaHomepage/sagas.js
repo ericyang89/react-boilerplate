@@ -113,7 +113,7 @@ export function* addPostSaga() {
 
   //TODO  需要把参数拼到 url
   const param = yield select(makeSelectAddPostParam());
-  const requestURL = `http://localhost:3001/posts`;
+  const requestURL = `http://localhost:3001/posts?${JSON.stringify(param)}`;
 
   try {
     // Call our request helper (see 'utils/request')

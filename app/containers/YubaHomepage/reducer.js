@@ -56,25 +56,18 @@ function yubaHomepageReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
-    case ADD_POSTS:
-
-    
+    case ADD_POSTS:    
       return state
       .set("addPostParam",action.param);
     case ADD_POSTS_SUCCESS:
- console.log("iinn")
   return state
-    .update("topics",
+      .update("topics",
       list=> list.update(
             list.findIndex(x=>x.get("topicId")===action.topicId),
             topic=>topic.update("posts",posts=>fromJS(posts.toJS().concat(action.posts)))
             )
     )
      
-      // .get("topics")
-      // .find((x)=>x.topicId===action.topicId)
-      // .get('posts')
-      // .add(action.posts);
     case ADD_POSTS_ERROR:
       return state;
         
