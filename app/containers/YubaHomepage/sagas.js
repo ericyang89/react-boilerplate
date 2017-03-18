@@ -118,6 +118,10 @@ export function* addPostSaga() {
   try {
     // Call our request helper (see 'utils/request')
     const data = yield call(request, requestURL);
+
+    // for test only
+    data[data.length-1].qid=""+new Date().getTime();
+    
     yield put(addPostsSuccess({
       posts:data,
       topicId:param.topicId,

@@ -18,7 +18,6 @@ const styles = {
     },
     slide: {
         height:viewHeight+"px",
-        border:"1px solid red"
     },
 
 };

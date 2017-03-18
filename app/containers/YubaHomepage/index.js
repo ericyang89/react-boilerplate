@@ -7,7 +7,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {makeSelectPosts,makeSelectTopics} from './selectors';
+import {makeSelectPosts,makeSelectTopics,makeSelectAddPostParam} from './selectors';
 import GroupList from 'components/GroupList';
 import PostItem from 'components/PostItem';
 import TabView from 'components/TabView';
@@ -55,7 +55,17 @@ export class YubaHomepage extends React.Component { // eslint-disable-line react
     const threshold=20;
     let groups=getGroups(this.props.topics);
     if(deltaHeight<threshold){
-      console.log('loadinnnnnnn data');
+       let groups=getGroups(this.props.topics);
+       let topic=groups[index];
+       console.log(topic.posts[topic.posts.length-1])
+         const param = {
+          topicId: topic.topicId,
+          lastQId: topic.posts[topic.posts.length-1].qid,
+        }
+        if(param.lastQId&&this.props.param.lastQId!=param.lastQId){
+            this.props.onAddPosts(param);
+        }
+      
     }
   }
   render() {
@@ -85,6 +95,7 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   posts: makeSelectPosts(),
   topics: makeSelectTopics(),
+  param:makeSelectAddPostParam(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(YubaHomepage);

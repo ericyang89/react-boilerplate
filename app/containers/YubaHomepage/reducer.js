@@ -56,7 +56,7 @@ function yubaHomepageReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
-    case ADD_POSTS:    
+    case ADD_POSTS:        
       return state
       .set("addPostParam",action.param);
     case ADD_POSTS_SUCCESS:
