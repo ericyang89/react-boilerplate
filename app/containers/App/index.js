@@ -11,6 +11,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 
 import YubaHeader from 'components/YubaHeader';
+import FloatBar from 'components/FloatBar';
 import Footer from 'components/Footer';
 import withProgressBar from 'components/ProgressBar';
 
@@ -35,6 +36,7 @@ export function App(props) {
       <YubaHeader/>
       {React.Children.toArray(props.children)}
       {/*<Footer />*/}
+      <FloatBar/>
     </AppWrapper>
   );
 }
