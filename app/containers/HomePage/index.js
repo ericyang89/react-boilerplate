@@ -23,6 +23,9 @@ import { loadRepos } from '../App/actions';
 import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 
+import { Link } from 'react-router';
+
+
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * when initial state username is not null, submit the form to load repos
@@ -51,6 +54,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         />
         <div>
           <CenteredSection>
+            <Link to="/homepage">homepage</Link>
             <H2>
               <FormattedMessage {...messages.startProjectHeader} />
             </H2>

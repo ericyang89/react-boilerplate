@@ -15,6 +15,7 @@ const viewHeight=headerHeight-headerLineHeight;
 const styles = {
     slideContainer: {
         padding: '0 0',
+        "-webkit-overflow-scrolling": "touch",
     },
     slide: {
         height:viewHeight+"px",

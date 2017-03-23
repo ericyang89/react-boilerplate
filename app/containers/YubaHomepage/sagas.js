@@ -53,7 +53,7 @@ import request from 'utils/request';
  */
 export function* getPosts() {
   // Select username from store
-  const requestURL = `http://localhost:3001/posts`;
+  const requestURL = `http://172.16.3.211:3001/posts`;
 
   try {
     // Call our request helper (see 'utils/request')
@@ -83,7 +83,7 @@ export function* getPostsData() {
  */
 export function* getTopics() {
   // Select username from store
-  const requestURL = `http://localhost:3001/topics`;
+  const requestURL = `http://172.16.3.211:3001/topics`;
 
   try {
     // Call our request helper (see 'utils/request')
@@ -113,7 +113,7 @@ export function* addPostSaga() {
 
   //TODO  需要把参数拼到 url
   const param = yield select(makeSelectAddPostParam());
-  const requestURL = `http://localhost:3001/posts?${JSON.stringify(param)}`;
+  const requestURL = `http://172.16.3.211:3001/posts?${JSON.stringify(param)}`;
 
   try {
     // Call our request helper (see 'utils/request')
