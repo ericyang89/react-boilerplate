@@ -7,7 +7,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div `
   display: flex;
   height: 1rem;
   justify-content: flex-start;
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   margin:.24rem;
 `;
 
-const Avatar = styled.img`
+const Avatar = styled.img `
   display: flex;
   height: .78rem;
   width:.78rem;
@@ -25,21 +25,20 @@ const Avatar = styled.img`
   align-items: center;
 `;
 
-const RightBox = styled.div`
+const RightBox = styled.div `
   color:#999;
   display:flex;
   flex-direction:column;
   margin-left: .2rem;
 `;
 
-const NameString = styled.div`
+const NameString = styled.div `
   font-size:.28rem;
 `;
 
-const TimeString = styled.div`
+const TimeString = styled.div `
   font-size:.2rem;
 `;
-
 
 class PostHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -62,7 +61,7 @@ class PostHeader extends React.PureComponent { // eslint-disable-line react/pref
 PostHeader.propTypes = {
   avator: React.PropTypes.string,
   poster: React.PropTypes.string,
-  postTime: React.PropTypes.string,
+  postTime: React.PropTypes.string
 };
 
 export default PostHeader;
